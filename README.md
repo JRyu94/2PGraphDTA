@@ -22,6 +22,7 @@ This repository contains code for predicting drug–target binding affinity usin
 ├── models.py
 ├── test.py
 ├── train_5fold.py
+├── requirements.txt
 ```
 
 ---
@@ -32,8 +33,8 @@ Please download the required `.csv` files and place them in the appropriate fold
 
 | Dataset | File         | URL                                                                 |
 |---------|--------------|----------------------------------------------------------------------|
-| Davis   | Davis.csv    | [Davis.csv](https://github.com/thinng/DeepDTA/blob/master/data/davis_data/Davis.csv) *(right-click → Save As)* |
-| KIBA    | KIBA.csv     | [KIBA.csv](https://github.com/thinng/DeepDTA/blob/master/data/kiba_data/KIBA.csv) *(right-click → Save As)* |
+| Davis   | Davis.csv    | [Davis.csv](https://github.com/JK-Liu7/AttentionMGT-DTA/blob/main/data/Davis/Davis.csv) *(right-click → Save As)* |
+| KIBA    | KIBA.csv     | [KIBA.csv](https://github.com/JK-Liu7/AttentionMGT-DTA/blob/main/data/KIBA/KIBA.csv) *(right-click → Save As)* |
 
 Save to:
 - `data/davis/Davis.csv`
