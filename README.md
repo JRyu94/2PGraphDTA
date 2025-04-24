@@ -1,6 +1,6 @@
-# 2PGraphDTA: Drug–Target Binding Affinity Prediction using GAT & GCN
+# 2PGraphDTA: Binding pocket–centered graph neural network for drug–target affinity prediction using partial charge and position-specific scoring matrix
 
-This repository contains code for predicting drug–target binding affinity using Graph Neural Networks (GAT for proteins, GCN for drugs) on Davis and KIBA datasets.
+This repository contains code for 2PGraphDTA. 2PGraphDTA is a deep learning framework for drug–target binding affinity prediction using graph neural networks.It encodes protein binding pockets using GAT with Position-Specific Scoring Matrix (PSSM) features and molecular structures using GCN with atomic partial charges. The combined representations are fed into an MLP for affinity regression, supporting both the Davis and KIBA datasets with 5-fold cross-validation.
 
 ---
 
