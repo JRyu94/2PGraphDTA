@@ -60,7 +60,6 @@ This will automatically create the following folders:
 
 Make sure Davis.csv and KIBA.csv are correctly placed.
 
----
 
 Option 2: Use pre-generated zipped graph files (faster)
 
