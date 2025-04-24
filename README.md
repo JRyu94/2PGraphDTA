@@ -1,10 +1,10 @@
-# 🧬 2PGraphDTA: Drug–Target Binding Affinity Prediction using GAT & GCN
+# 2PGraphDTA: Drug–Target Binding Affinity Prediction using GAT & GCN
 
 This repository contains code for predicting drug–target binding affinity using Graph Neural Networks (GAT for proteins, GCN for drugs) on Davis and KIBA datasets.
 
 ---
 
-## 📁 Directory Structure
+# Directory Structure
 
 ```
 .
@@ -26,7 +26,7 @@ This repository contains code for predicting drug–target binding affinity usin
 
 ---
 
-## 📥 Step 0: Download CSV Files
+# Step 0: Download CSV Files
 
 Please download the required `.csv` files and place them in the appropriate folders:
 
@@ -41,7 +41,27 @@ Save to:
 
 ---
 
-## 📦 Step 1: Unzip Graph Files
+# Step 1: Unzip Graph Files
+
+You have two options to prepare graph files for training:
+
+Option 1: Use data_loader.py to generate .bin graphs
+
+This will automatically create the following folders:
+
+- `data/davis/drug_graphs_bin_davis/`
+
+- `data/davis/protein_graphs_bin_davis/`
+
+- `data/kiba/drug_graphs_bin_kiba/`
+
+- `data/kiba/protein_graphs_bin_kiba/`
+
+Make sure Davis.csv and KIBA.csv are correctly placed.
+
+---
+
+Option 2: Use pre-generated zipped graph files (faster)
 
 Unzip the `.zip` graph files **before training**:
 
@@ -54,10 +74,10 @@ unzip data/kiba/protein_graphs_bin_kiba.zip -d data/kiba/
 
 ---
 
-## 🚀 Step 2: Train (5-Fold Cross Validation)
+## Step 2: Train (5-Fold Cross Validation)
 
 ```bash
-python train_5fold.py --dataset kiba --epochs 10
+python train_5fold.py --dataset davis --epochs 1000
 ```
 
 - `--dataset`: `kiba` or `davis`
@@ -68,14 +88,14 @@ Trained models will be saved to:
 model/best_model_<dataset>_fold<k>.pth
 ```
 
-> 💡 If `model/` folder doesn’t exist, it will be created automatically.
+> If `model/` folder doesn’t exist, it will be created automatically.
 
 ---
 
-## 🧪 Step 3: Evaluate a Fold
+## Step 3: Evaluate a Fold
 
 ```bash
-python test.py --dataset kiba --fold 1
+python test.py --dataset davis --fold 1
 ```
 
 - `--fold`: Fold number (1–5)
@@ -83,7 +103,7 @@ python test.py --dataset kiba --fold 1
 
 ---
 
-## 🧠 Model Architecture
+## Model Architecture
 
 - **Protein Encoder**: GATConv (2-layer by default)
 - **Drug Encoder**: GCNConv (2-layer by default)
@@ -91,7 +111,7 @@ python test.py --dataset kiba --fold 1
 
 ---
 
-## 📚 File Descriptions
+## File Descriptions
 
 | File             | Description                                      |
 |------------------|--------------------------------------------------|
@@ -103,7 +123,7 @@ python test.py --dataset kiba --fold 1
 
 ---
 
-## 🔧 Requirements
+## Requirements
 
 Install dependencies (PyTorch, PyG, NumPy, etc.):
 
