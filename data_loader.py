@@ -4,22 +4,26 @@ import pandas as pd
 from torch.utils.data import Dataset, DataLoader
 from torch_geometric.data import Data
 
-# 🔹 공통 그래프 데이터 경로
-DRUG_GRAPH_DIR = {
-    "davis": "drug_graphs_bin",
-    "kiba": "drug_graphs_bin_kiba"
+DATASET_ROOT = {
+    "davis": "data/davis",
+    "kiba": "data/kiba"
 }
+
+DRUG_GRAPH_DIR = {
+    "davis": os.path.join(DATASET_ROOT["davis"], "drug_graphs_bin_davis"),
+    "kiba": os.path.join(DATASET_ROOT["kiba"], "drug_graphs_bin_kiba")
+}
+
 PROTEIN_GRAPH_DIR = {
-    "davis": "gnn_graphs_bin",
-    "kiba": "kiba_graphs_bin"
+    "davis": os.path.join(DATASET_ROOT["davis"], "protein_graphs_bin_davis"),
+    "kiba": os.path.join(DATASET_ROOT["kiba"], "protein_graphs_bin_kiba")
 }
 
 CSV_FILE = {
-    "davis": "Davis.csv",
-    "kiba": "KIBA.csv"
+    "davis": os.path.join(DATASET_ROOT["davis"], "Davis.csv"),
+    "kiba": os.path.join(DATASET_ROOT["kiba"], "KIBA.csv")
 }
 
-# Binding Dataset 정의
 class BindingDataset(Dataset):
     def __init__(self, binding_data):
         self.binding_data = list(binding_data.items())
@@ -29,14 +33,10 @@ class BindingDataset(Dataset):
 
     def __getitem__(self, idx):
         (protein_id, drug_id), (protein_graph_path, drug_graph_path, affinity) = self.binding_data[idx]
-
         protein_graph = torch.load(protein_graph_path, weights_only=False)
         drug_graph = torch.load(drug_graph_path, weights_only=False)
-
         affinity_tensor = torch.tensor([affinity], dtype=torch.float)
         return protein_graph, drug_graph, affinity_tensor
-
-# PyTorch DataLoader 정의
 
 def collate_fn(batch):
     protein_batch = [item[0] for item in batch]
@@ -44,7 +44,6 @@ def collate_fn(batch):
     labels = torch.cat([item[2] for item in batch])
     return protein_batch, drug_batch, labels
 
-# 데이터 로드 함수 정의
 def load_dataset(name="davis", batch_size=32):
     assert name in ["davis", "kiba"], "Dataset name must be either 'davis' or 'kiba'"
 
@@ -76,9 +75,9 @@ def load_dataset(name="davis", batch_size=32):
         if protein_exists and drug_exists:
             binding_data[(protein_id, drug_id)] = (protein_graph_file, drug_graph_file, affinity)
 
-    print(f"✅ Total valid samples: {len(binding_data)}")
-    print(f"❌ Missing protein graphs: {missing_protein}")
-    print(f"❌ Missing drug graphs: {missing_drug}")
+    print(f"Total valid samples: {len(binding_data)}")
+    print(f"Missing protein graphs: {missing_protein}")
+    print(f"Missing drug graphs: {missing_drug}")
 
     dataset = BindingDataset(binding_data)
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
