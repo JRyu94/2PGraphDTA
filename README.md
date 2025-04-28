@@ -1,6 +1,6 @@
 # 2PGraphDTA: Binding pocket–centered graph neural network for drug–target affinity prediction using partial charge and position-specific scoring matrix
 
-This repository contains code for 2PGraphDTA. 2PGraphDTA is a deep learning framework for drug–target binding affinity prediction using graph neural networks.It encodes protein binding pockets using GAT with Position-Specific Scoring Matrix (PSSM) features and molecular structures using GCN with atomic partial charges. The combined representations are fed into an MLP for affinity regression, supporting both the Davis and KIBA datasets with 5-fold cross-validation.
+This repository contains code for 2PGraphDTA. 2PGraphDTA is a deep learning framework for drug–target binding affinity prediction using graph neural networks.It encodes protein binding pockets using GAT with Position-Specific Scoring Matrix (PSSM) features and molecular structures using GCN with atomic partial charges. The combined representations are fed into an MLP for affinity regression.
 
 ---
 
@@ -21,7 +21,7 @@ This repository contains code for 2PGraphDTA. 2PGraphDTA is a deep learning fram
 ├── emetrics.py
 ├── models.py
 ├── test.py
-├── train_5fold.py
+├── train.py
 ├── requirements.txt
 ```
 
@@ -74,10 +74,10 @@ unzip data/kiba/protein_graphs_bin_kiba.zip -d data/kiba/
 
 ---
 
-## Step 2: Train (5-Fold Cross Validation)
+## Step 2: Train
 
 ```bash
-python train_5fold.py --dataset davis --epochs 1000
+python train.py --dataset davis --epochs 1000
 ```
 
 - `--dataset`: `kiba` or `davis`
@@ -85,7 +85,7 @@ python train_5fold.py --dataset davis --epochs 1000
 
 Trained models will be saved to:
 ```
-model/best_model_<dataset>_fold<k>.pth
+model/best_model_<dataset>.pth
 ```
 
 > If `model/` folder doesn’t exist, it will be created automatically.
@@ -95,10 +95,9 @@ model/best_model_<dataset>_fold<k>.pth
 ## Step 3: Evaluate a Fold
 
 ```bash
-python test.py --dataset davis --fold 1
+python test.py --dataset davis
 ```
 
-- `--fold`: Fold number (1–5)
 - Results: MSE, CI, R² ± std
 
 ---
@@ -115,7 +114,7 @@ python test.py --dataset davis --fold 1
 
 | File             | Description                                      |
 |------------------|--------------------------------------------------|
-| `train_5fold.py` | 5-fold cross-validation training script          |
+| `train.py`       | Training script                                  |
 | `test.py`        | Evaluation on a selected fold                    |
 | `models.py`      | GNN-based model definition (Protein GAT, Drug GCN, MLP) |
 | `data_loader.py` | Graph and CSV loader for Davis/KIBA              |
