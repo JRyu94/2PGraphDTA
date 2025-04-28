@@ -17,7 +17,6 @@ if __name__ == '__main__':
     parser.add_argument('--dropout', type=float, default=0.3)
     args = parser.parse_args()
 
-    # ✅ 데이터셋 로드
     dataset, _ = load_dataset(name=args.dataset, batch_size=args.batch_size)
 
     dataset_size = len(dataset)
@@ -25,7 +24,6 @@ if __name__ == '__main__':
     val_size = int(0.1 * dataset_size)
     test_size = dataset_size - train_size - val_size
 
-    # ✅ 8:1:1 split에서 test set만
     train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
         dataset, [train_size, val_size, test_size],
         generator=torch.Generator().manual_seed(42)  # Train 때랑 동일 seed!
