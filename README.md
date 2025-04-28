@@ -115,7 +115,7 @@ python test.py --dataset davis
 | File             | Description                                      |
 |------------------|--------------------------------------------------|
 | `train.py`       | Training script                                  |
-| `test.py`        | Evaluation on a selected fold                    |
+| `test.py`        | Evaluation                                       |
 | `models.py`      | GNN-based model definition (Protein GAT, Drug GCN, MLP) |
 | `data_loader.py` | Graph and CSV loader for Davis/KIBA              |
 | `emetrics.py`    | Evaluation metrics (MSE, CI, R²)                 |
