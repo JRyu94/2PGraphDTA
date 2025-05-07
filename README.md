@@ -87,8 +87,6 @@ python train_5fold.py --dataset davis
 | `--hidden_dim` | `int`   | `256`    | Dimensionality of hidden layers in GAT/GCN and MLP.                                 |
 | `--output_dim` | `int`   | `1`      | Output dimension of the model (usually 1 for regression).                           |
 | `--dropout`    | `float` | `0.2`    | Dropout rate applied in GAT/GCN and MLP layers.                                     |
-| `--num_layers` | `int`   | `2`      | Number of GATConv (protein) and GCNConv (drug) layers.                              |
-
 
 Trained models will be saved to:
 ```
@@ -113,7 +111,6 @@ python test.py --dataset davis --fold 1
 | `--hidden_dim` | `int`   | `256`    | Dimensionality of hidden layers in GAT/GCN and MLP.                                 |
 | `--output_dim` | `int`   | `1`      | Output dimension of the model (usually 1 for regression).                           |
 | `--dropout`    | `float` | `0.2`    | Dropout rate applied in GAT/GCN and MLP layers.                                     |
-| `--num_layers` | `int`   | `2`      | Number of GATConv (protein) and GCNConv (drug) layers.                              |
 
 - Results: MSE, CI, R² ± std (collected across 5 folds externally)
 
