@@ -21,7 +21,7 @@ This repository contains code for 2PGraphDTA. 2PGraphDTA is a deep learning fram
 ├── emetrics.py
 ├── models.py
 ├── test.py
-├── train.py
+├── train_5fold.py
 ├── requirements.txt
 ```
 
