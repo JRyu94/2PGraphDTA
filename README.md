@@ -77,15 +77,22 @@ unzip data/kiba/protein_graphs_bin_kiba.zip -d data/kiba/
 ## Step 2: Train
 
 ```bash
-python train.py --dataset davis --epochs 1000
+python train_5fold.py --dataset davis
 ```
 
-- `--dataset`: `kiba` or `davis`
-- `--epochs`: Number of epochs (default=2000)
+| Argument       | Type    | Default  | Description                                                                         |
+| -------------- | ------- | -------- | ----------------------------------------------------------------------------------- |
+| `--dataset`    | `str`   | required | Choose the dataset to use. Options: `'davis'` or `'kiba'`.                          |
+| `--batch_size` | `int`   | `32`     | Mini-batch size used for training.                                                  |
+| `--hidden_dim` | `int`   | `256`    | Dimensionality of hidden layers in GAT/GCN and MLP.                                 |
+| `--output_dim` | `int`   | `1`      | Output dimension of the model (usually 1 for regression).                           |
+| `--dropout`    | `float` | `0.2`    | Dropout rate applied in GAT/GCN and MLP layers.                                     |
+| `--num_layers` | `int`   | `2`      | Number of GATConv (protein) and GCNConv (drug) layers.                              |
+
 
 Trained models will be saved to:
 ```
-model/best_model_<dataset>.pth
+model/best_model_<dataset>_fold<fold>.pth
 ```
 
 > If `model/` folder doesn’t exist, it will be created automatically.
@@ -95,10 +102,20 @@ model/best_model_<dataset>.pth
 ## Step 3: Evaluate a Fold
 
 ```bash
-python test.py --dataset davis
+python test.py --dataset davis --fold 1
 ```
 
-- Results: MSE, CI, R² ± std
+| Argument       | Type    | Default  | Description                                                                         |
+| -------------- | ------- | -------- | ----------------------------------------------------------------------------------- |
+| `--dataset`    | `str`   | required | Choose the dataset to use. Options: `'davis'` or `'kiba'`.                          |
+| `--fold`       | `int`   | required | Specifies which fold to train on. Values: `1` to `5` (for 5-fold cross-validation). |
+| `--batch_size` | `int`   | `32`     | Mini-batch size used for training.                                                  |
+| `--hidden_dim` | `int`   | `256`    | Dimensionality of hidden layers in GAT/GCN and MLP.                                 |
+| `--output_dim` | `int`   | `1`      | Output dimension of the model (usually 1 for regression).                           |
+| `--dropout`    | `float` | `0.2`    | Dropout rate applied in GAT/GCN and MLP layers.                                     |
+| `--num_layers` | `int`   | `2`      | Number of GATConv (protein) and GCNConv (drug) layers.                              |
+
+- Results: MSE, CI, R² ± std (collected across 5 folds externally)
 
 ---
 
@@ -114,7 +131,7 @@ python test.py --dataset davis
 
 | File             | Description                                      |
 |------------------|--------------------------------------------------|
-| `train.py`       | Training script                                  |
+| `train_5fold.py` | Training script with 5-fold cross validation     |
 | `test.py`        | Evaluation                                       |
 | `models.py`      | GNN-based model definition (Protein GAT, Drug GCN, MLP) |
 | `data_loader.py` | Graph and CSV loader for Davis/KIBA              |
